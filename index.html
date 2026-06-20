@@ -39,7 +39,9 @@ body{
 /* ---------- phone frame ---------- */
 .viewport-wrapper{
   position:relative;
-  width:100vw;
+  width:100%;
+  max-width:100vw;
+  margin: 0 auto;
   height:100dvh;
   overflow-y:auto;
   overflow-x:hidden;
@@ -116,7 +118,14 @@ body{
   width:100%;
   pointer-events:auto;
 }
-.cover-img{width:100%;height:100dvh;object-fit:cover;display:block}
+.cover-img{
+  width:100%;
+  height:100dvh;
+  object-fit:cover;
+  object-position:center;
+  display:block;
+  margin: 0 auto;
+}
 
 /* ── SCREEN 1 : entry cover ── */
 #s-entry{
@@ -173,6 +182,15 @@ body{
 }
 #s-details .cover-img{
   height:100dvh;
+  object-position: center top; /* Start at top for the long invitation image */
+}
+
+@keyframes panImageDown {
+  0% { object-position: center top; }
+  100% { object-position: center bottom; }
+}
+#s-details .cover-img.panning {
+  animation: panImageDown 5s ease-in-out forwards;
 }
 
 /* ---------- particles canvas ---------- */
@@ -727,15 +745,19 @@ function startAutoAdvance() {
         behavior: 'smooth'
       });
       
-      // Transition 3: Wait 2.5 seconds on details cover, then slowly scroll down to bottom
+      // Transition 3: Wait 2.5 seconds on details cover, then trigger the image's internal pan
       autoAdvanceTimeout = setTimeout(function(){
-        var targetScroll = scroller.scrollHeight - scroller.clientHeight;
-        slowScrollToBottom(scroller, targetScroll, 3800); // 3.8s classy slow scroll
+        document.querySelector('#s-details .cover-img').classList.add('panning');
         
-        // Trigger classy stagger reveal 1 second into the slow scroll
+        // After pan finishes (5s), scroll the viewport down slightly to gently reveal the CTAs
         setTimeout(function(){
-          document.querySelector('.cta-stack').classList.add('revealed');
-        }, 1000);
+          var targetScroll = scroller.scrollHeight - scroller.clientHeight;
+          slowScrollToBottom(scroller, targetScroll, 2000); // 2s classy scroll to CTAs
+          
+          setTimeout(function(){
+            document.querySelector('.cta-stack').classList.add('revealed');
+          }, 800);
+        }, 5000);
       }, 2500);
       
     }, 5500);
