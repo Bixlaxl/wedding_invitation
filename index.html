@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Zainah &amp; Wafiq — Wedding Invitation</title>
+<meta name="description" content="The wedding of Zainah Akbar Ali & M. Abdul Wafiq · Saturday, 15 August 2026 · Orchid Resorts, Uthandi, ECR, Chennai.">
+<meta property="og:title" content="The Wedding of Zainah & Wafiq">
+<meta property="og:description" content="Saturday, 15 August 2026 · Orchid Resorts, Uthandi, ECR, Chennai">
+<meta property="og:image" content="2.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Pinyon+Script&display=swap" rel="stylesheet">
+
+<!-- preload screen images so the auto sequence is seamless -->
+<link rel="preload" as="image" href="1.png">
+<link rel="preload" as="image" href="2.png">
+<link rel="preload" as="image" href="3.png">
+<link rel="preload" as="image" href="4.png">
+
+<style>
+:root{
+  --maroon:#5a1620;
+  --wine:#6e2531;
+  --cream:#f5ece1;
+  --gold:#e6c875;
+  --gold-dark:#c8a24c;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  background:radial-gradient(circle at 50% 0%, #340d14 0%, #1f0810 60%, #150509 100%);
+  font-family:'Cormorant Garamond',serif;
+  display:flex;align-items:center;justify-content:center;
+  min-height:100dvh;
+}
+
+/* ---------- phone frame ---------- */
+.viewport-wrapper{
+  position:relative;
+  width:100vw;
+  height:100dvh;
+  overflow-y:auto;
+  overflow-x:hidden;
+  overscroll-behavior:contain;
+  -webkit-overflow-scrolling:touch;
+  background:#2a0a10;
+  scrollbar-width:none;
+  -ms-overflow-style:none;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+}
+.viewport-wrapper::-webkit-scrollbar{
+  display:none;
+}
+@media (min-width:600px){
+  .viewport-wrapper{
+    width:auto;
+    height:min(95vh, calc(430px * 1671 / 941));
+    aspect-ratio:941 / 1671;
+    max-width:430px;
+    border-radius:16px;
+    box-shadow:0 30px 90px rgba(0,0,0,.7);
+  }
+}
+
+/* ---------- music player floating toggle ---------- */
+.music-control-container {
+  position: sticky;
+  top: 0;
+  height: 0;
+  width: 100%;
+  z-index: 200;
+  pointer-events: none;
+}
+.music-toggle {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(40, 8, 14, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1.2px solid var(--gold);
+  display: none; /* revealed after cover open */
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  pointer-events: auto;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.35);
+  transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+  outline: none;
+}
+.music-toggle:hover {
+  transform: scale(1.05);
+  background: rgba(90, 22, 32, 0.8);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45);
+}
+.music-toggle svg {
+  transition: transform 0.3s ease;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+.music-toggle.playing svg {
+  animation: spin 12s linear infinite;
+}
+
+/* ---------- screens & stacked card transitions ---------- */
+.screen{
+  position:relative;
+  width:100%;
+  pointer-events:auto;
+}
+.cover-img{width:100%;height:100dvh;object-fit:cover;display:block}
+
+/* ── SCREEN 1 : entry cover ── */
+#s-entry{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  background:#3e2529;
+  cursor:pointer;
+  overflow: hidden;
+  transition: opacity 1.2s cubic-bezier(0.25, 1, 0.5, 1), transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+}
+#s-entry.fade-out {
+  opacity: 0 !important;
+  transform: scale(1.15) !important;
+  pointer-events: none !important;
+}
+#s-entry .cover-img{
+  transform-origin:50% 47%;
+  animation:breathe 3.8s ease-in-out infinite;
+}
+@keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.025)}}
+
+/* ── SCREENS 2, 3, 4 — stacked in document flow with sticky reveal ── */
+#s-opening{ 
+  position: sticky;
+  top: 0;
+  height: 100dvh;
+  z-index: 10; 
+  background:#54181f;
+  scroll-snap-align: start;
+  overflow: hidden;
+}
+#s-journey{ 
+  position: sticky;
+  top: 0;
+  height: 100dvh;
+  z-index: 20; 
+  background:#e6e3d5; 
+  scroll-snap-align: start;
+  overflow: hidden;
+  box-shadow: 0 -15px 35px rgba(0, 0, 0, 0.35);
+}
+#s-details{
+  position: relative;
+  z-index: 30;
+  background:var(--cream);
+  scroll-snap-align: start;
+  box-shadow: 0 -15px 35px rgba(0, 0, 0, 0.35);
+  height: auto;
+  min-height: 100dvh;
+}
+#s-details .cover-img{
+  height:100dvh;
+}
+
+/* ---------- particles canvas ---------- */
+#particles-canvas {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100dvh;
+  pointer-events: none;
+  z-index: 25;
+  display: none;
+}
+
+/* ---------- invitation CTAs ---------- */
+.cta-stack{
+  background:var(--cream);
+  padding:24px 30px 48px;
+  display:flex;flex-direction:column;align-items:center;gap:16px;
+  position: relative;
+  z-index: 40;
+}
+.cta-stack > * {
+  opacity: 0;
+  transform: translateY(15px);
+  transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.cta-stack.revealed > * {
+  opacity: 1;
+  transform: translateY(0);
+}
+.cta-stack.revealed > .countdown-section {
+  transition-delay: 0.1s;
+}
+.cta-stack.revealed > .dropdown-wrapper {
+  transition-delay: 0.35s;
+}
+.cta-stack.revealed > .btn-cta.ghost {
+  transition-delay: 0.55s;
+}
+.btn-cta{
+  width:240px;max-width:85%;padding:14px 0;
+  background:var(--maroon);color:var(--cream);
+  border:none;border-radius:30px;
+  font-family:'Cormorant Garamond',serif;
+  font-size:15px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;
+  text-decoration:none;text-align:center;cursor:pointer;
+  box-shadow:0 8px 22px rgba(90,22,32,.2);
+  transition: all 0.3s ease;
+}
+.btn-cta:hover{
+  transform:translateY(-2px);
+  background:var(--wine);
+  box-shadow:0 12px 28px rgba(90,22,32,.3);
+}
+.btn-cta.ghost{
+  background:transparent;
+  color:var(--maroon);
+  border:1.5px solid var(--maroon);
+  box-shadow:none;
+}
+.btn-cta.ghost:hover{
+  background:var(--maroon);
+  color:var(--cream);
+}
+
+/* ---------- countdown timer ---------- */
+.countdown-section {
+  width: 100%;
+  max-width: 320px;
+  margin: 10px 0 20px;
+  text-align: center;
+  background: rgba(90, 22, 32, 0.03);
+  border: 1px dashed rgba(90, 22, 32, 0.2);
+  border-radius: 12px;
+  padding: 18px 12px;
+}
+.section-title-alt {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--maroon);
+  margin-bottom: 12px;
+}
+.countdown-grid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+}
+.countdown-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 62px;
+}
+.countdown-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 30px;
+  font-weight: 500;
+  color: var(--maroon);
+  line-height: 1;
+}
+.countdown-label {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #7d5e63;
+  margin-top: 5px;
+}
+.countdown-divider {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  color: var(--maroon);
+  line-height: 1;
+  padding-bottom: 16px;
+  opacity: 0.7;
+}
+
+/* ---------- secondary cta buttons ---------- */
+.calendar-venue-row {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  max-width: 290px;
+  justify-content: center;
+  margin-bottom: 4px;
+}
+.btn-cta.secondary {
+  flex: 1;
+  font-size: 12px;
+  padding: 11px 0;
+  background: transparent;
+  color: var(--maroon);
+  border: 1.2px solid rgba(90, 22, 32, 0.35);
+  box-shadow: none;
+  border-radius: 24px;
+  text-decoration: none;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  letter-spacing: 1.5px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+.btn-cta.secondary:hover {
+  background: rgba(90, 22, 32, 0.05);
+  border-color: var(--maroon);
+}
+.dropdown-wrapper {
+  position: relative;
+  flex: 1;
+  display: flex;
+}
+.main-cta-dropdown {
+  flex: none;
+  width: 240px;
+  max-width: 85%;
+}
+.main-cta-dropdown .btn-cta {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+.main-cta-dropdown .dropdown-menu {
+  border: 1.5px solid var(--maroon);
+  border-radius: 12px;
+  box-shadow: 0 -10px 25px rgba(90, 22, 32, 0.16);
+}
+.dropdown-menu {
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  width: 100%;
+  background: var(--cream);
+  border: 1px solid rgba(90, 22, 32, 0.2);
+  border-radius: 8px;
+  box-shadow: 0 -8px 24px rgba(0,0,0,0.12);
+  display: none;
+  flex-direction: column;
+  z-index: 150;
+  margin-bottom: 8px;
+  overflow: hidden;
+  animation: popIn 0.25s ease;
+}
+.dropdown-menu.show {
+  display: flex;
+}
+.dropdown-menu a {
+  padding: 11px 12px;
+  font-size: 12px;
+  color: var(--maroon);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(90, 22, 32, 0.1);
+  text-align: center;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+.dropdown-menu a:last-child {
+  border-bottom: none;
+}
+.dropdown-menu a:hover {
+  background: rgba(90, 22, 32, 0.06);
+}
+
+/* ---------- RSVP modal ---------- */
+.modal-veil{
+  position:fixed;
+  inset:0;
+  z-index:400;
+  background:rgba(40,8,14,.65);
+  backdrop-filter:blur(4px);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+}
+.modal-veil.show{display:flex;animation:popIn .35s cubic-bezier(0.25, 1, 0.5, 1)}
+@keyframes popIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.modal-card{
+  width:100%;
+  max-width:380px;
+  background:var(--cream);
+  border-radius:16px;
+  padding:40px 32px 36px;
+  text-align:center;
+  position:relative;
+  box-shadow:0 30px 80px rgba(0,0,0,.6);
+  border: 1px solid rgba(230, 200, 117, 0.35); /* gold border */
+}
+.modal-card h3{
+  font-size:32px;
+  font-weight:500;
+  color:var(--maroon);
+  letter-spacing:2px;
+  margin-bottom:6px;
+}
+.modal-card p{
+  font-size:16px;
+  color:#6b4a44;
+  margin-bottom:24px;
+  font-style: italic;
+}
+.modal-card input,.modal-card select{
+  width:100%;
+  padding:13px 16px;
+  margin-bottom:14px;
+  border:1px solid rgba(90,22,32,.25);
+  border-radius:8px;
+  font-family:'Cormorant Garamond',serif;
+  font-size:16px;
+  color:#4a2422;
+  background:#fff;
+  outline:none;
+  transition: border-color 0.3s ease;
+}
+.modal-card input:focus,.modal-card select:focus{
+  border-color:var(--maroon);
+  box-shadow: 0 0 0 2px rgba(90, 22, 32, 0.08);
+}
+.modal-close{
+  position:absolute;
+  top:12px;
+  right:16px;
+  background:none;
+  border:none;
+  font-size:28px;
+  color:#6b4a44;
+  cursor:pointer;
+  line-height:1;
+  transition: color 0.3s ease;
+}
+.modal-close:hover{
+  color:var(--maroon);
+}
+.modal-thanks{
+  display:none;
+  font-family:'Pinyon Script',cursive;
+  font-size:32px;
+  color:var(--maroon);
+  margin-top:12px;
+}
+
+@media (prefers-reduced-motion: reduce){
+  #s-entry .cover-img{animation:none}
+  .music-toggle.playing svg {animation:none}
+}
+</style>
+<body>
+
+<audio id="bg-audio" src="إليـك أشكو.mp3" loop preload="auto"></audio>
+
+<div class="viewport-wrapper">
+
+  <!-- Floating Music Toggle Container -->
+  <div class="music-control-container">
+    <button class="music-toggle" id="music-toggle-btn" aria-label="Toggle music">
+      <svg class="music-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="var(--gold)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9 18V5l12-2v13"></path>
+        <circle cx="6" cy="18" r="3"></circle>
+        <circle cx="18" cy="16" r="3"></circle>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Falling Particles Canvas -->
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- SCREEN 1 : ENTRY -->
+  <div class="screen" id="s-entry" role="button" aria-label="Tap to open invitation">
+    <img class="cover-img" src="1.png" alt="Wax seal with a rose — Tap to open">
+  </div>
+
+  <!-- SCREEN 2 : OPENING -->
+  <div class="screen" id="s-opening">
+    <img class="cover-img" src="2.png" alt="The Wedding of Zainah Weds Wafiq · 15 Aug 2026">
+  </div>
+
+  <!-- SCREEN 3 : THE JOURNEY -->
+  <div class="screen" id="s-journey">
+    <img class="cover-img" src="3.png" alt="W&amp;Z — The Journey of Zainah & Wafiq">
+  </div>
+
+  <!-- SCREEN 4 : INVITE DETAILS -->
+  <div class="screen" id="s-details">
+    <img class="cover-img" src="4.png" alt="Wedding invitation details for Zainah Akbar Ali & M. Abdul Wafiq">
+    <div class="cta-stack">
+      
+      <!-- Live Countdown Timer -->
+      <div class="countdown-section" id="countdown-container">
+        <h4 class="section-title-alt">Counting down to the day</h4>
+        <div class="countdown-grid">
+          <div class="countdown-item">
+            <span class="countdown-num" id="cd-days">00</span>
+            <span class="countdown-label">Days</span>
+          </div>
+          <div class="countdown-divider">:</div>
+          <div class="countdown-item">
+            <span class="countdown-num" id="cd-hours">00</span>
+            <span class="countdown-label">Hrs</span>
+          </div>
+          <div class="countdown-divider">:</div>
+          <div class="countdown-item">
+            <span class="countdown-num" id="cd-mins">00</span>
+            <span class="countdown-label">Mins</span>
+          </div>
+          <div class="countdown-divider">:</div>
+          <div class="countdown-item">
+            <span class="countdown-num" id="cd-secs">00</span>
+            <span class="countdown-label">Secs</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Prominent Primary Save the Date Dropdown -->
+      <div class="dropdown-wrapper main-cta-dropdown">
+        <button class="btn-cta" id="calendar-btn" aria-haspopup="menu" aria-expanded="false">Save the Date</button>
+        <div class="dropdown-menu" id="calendar-dropdown" role="menu">
+          <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Wedding+of+Zainah+%26+Wafiq&dates=20260815T103000Z/20260815T163000Z&details=We+would+be+honoured+by+your+presence+at+our+wedding+on+Saturday,+15+August+2026.&location=Orchid+Resorts,+Uthandi,+ECR,+Chennai" target="_blank" role="menuitem">Google Calendar</a>
+          <a href="#" id="download-ics" role="menuitem">Apple / iCal</a>
+        </div>
+      </div>
+
+      <!-- Prominent Primary Venue Map CTA -->
+      <a class="btn-cta ghost" href="https://www.google.com/maps/search/?api=1&query=Orchid+Resorts,+Uthandi,+ECR,+Chennai" target="_blank">
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right: 8px; vertical-align: middle;">
+          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+          <circle cx="12" cy="10" r="3"></circle>
+        </svg>Venue Map
+      </a>
+
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* ---------- audio & floating controls ---------- */
+var audio = document.getElementById('bg-audio');
+audio.volume = 0.75;
+var musicToggle = document.getElementById('music-toggle-btn');
+
+function toggleMusic() {
+  if (audio.paused) {
+    audio.play().then(function() {
+      musicToggle.classList.add('playing');
+    }).catch(function(e) {
+      console.log("Audio play blocked by browser:", e);
+    });
+  } else {
+    audio.pause();
+    musicToggle.classList.remove('playing');
+  }
+}
+musicToggle.addEventListener('click', toggleMusic);
+
+/* ---------- falling particles canvas ---------- */
+var canvas = document.getElementById('particles-canvas');
+var ctx = canvas.getContext('2d');
+var width = canvas.offsetWidth;
+var height = canvas.offsetHeight;
+canvas.width = width;
+canvas.height = height;
+
+window.addEventListener('resize', function(){
+  width = canvas.offsetWidth;
+  height = canvas.offsetHeight;
+  canvas.width = width;
+  canvas.height = height;
+});
+
+var particles = [];
+function Petal() {
+  this.reset();
+  this.y = Math.random() * height;
+}
+Petal.prototype.reset = function() {
+  this.x = Math.random() * width;
+  this.y = -20;
+  this.size = Math.random() * 8 + 6;
+  this.speed = Math.random() * 1.1 + 0.7;
+  this.oscillationSpeed = Math.random() * 0.02 + 0.01;
+  this.angle = Math.random() * Math.PI * 2;
+  this.spinSpeed = (Math.random() - 0.5) * 0.025;
+  this.opacity = Math.random() * 0.35 + 0.45;
+  var colors = [
+    'rgba(90, 22, 32, opacity)',
+    'rgba(110, 37, 49, opacity)',
+    'rgba(74, 28, 37, opacity)',
+    'rgba(140, 40, 55, opacity)'
+  ];
+  this.colorPattern = colors[Math.floor(Math.random() * colors.length)];
+};
+Petal.prototype.update = function() {
+  this.y += this.speed;
+  this.angle += this.spinSpeed;
+  this.x += Math.sin(this.y * this.oscillationSpeed) * 0.5;
+  if (this.y > height + 20) {
+    this.reset();
+  }
+};
+Petal.prototype.draw = function() {
+  ctx.save();
+  ctx.translate(this.x, this.y);
+  ctx.rotate(this.angle);
+  ctx.scale(Math.sin(this.angle * 0.5), 1);
+  ctx.fillStyle = this.colorPattern.replace('opacity', this.opacity);
+  ctx.beginPath();
+  ctx.ellipse(0, 0, this.size, this.size * 0.6, 0, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.restore();
+};
+
+function Sparkle() {
+  this.reset();
+  this.y = Math.random() * height;
+}
+Sparkle.prototype.reset = function() {
+  this.x = Math.random() * width;
+  this.y = -10;
+  this.size = Math.random() * 1.8 + 1.0;
+  this.speed = Math.random() * 0.6 + 0.3;
+  this.opacity = Math.random() * 0.45 + 0.25;
+  this.flickerSpeed = Math.random() * 0.04 + 0.015;
+  var colors = ['#e6c875', '#d4af37', '#f3e5ab', '#cfb53b'];
+  this.color = colors[Math.floor(Math.random() * colors.length)];
+};
+Sparkle.prototype.update = function() {
+  this.y += this.speed;
+  this.opacity += Math.sin(this.y * this.flickerSpeed) * 0.08;
+  this.opacity = Math.max(0.1, Math.min(0.85, this.opacity));
+  if (this.y > height + 10) {
+    this.reset();
+  }
+};
+Sparkle.prototype.draw = function() {
+  ctx.beginPath();
+  ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+  ctx.fillStyle = this.color;
+  ctx.globalAlpha = this.opacity;
+  ctx.fill();
+  ctx.globalAlpha = 1.0;
+};
+
+function initParticles() {
+  for (var i = 0; i < 15; i++) {
+    particles.push(new Petal());
+  }
+  for (var i = 0; i < 30; i++) {
+    particles.push(new Sparkle());
+  }
+}
+function animateParticles() {
+  ctx.clearRect(0, 0, width, height);
+  for (var i = 0; i < particles.length; i++) {
+    particles[i].update();
+    particles[i].draw();
+  }
+  requestAnimationFrame(animateParticles);
+}
+
+/* ---------- card transition slideshow auto-advance ---------- */
+var scroller = document.querySelector('.viewport-wrapper');
+var sOpening = document.getElementById('s-opening');
+var sJourney = document.getElementById('s-journey');
+var sDetails = document.getElementById('s-details');
+var started = false;
+var autoAdvanceTimeout = null;
+
+function slowScrollToBottom(el, targetTop, duration) {
+  var startTop = el.scrollTop;
+  var dist = targetTop - startTop;
+  if (dist <= 0) return;
+  
+  var startTime = null;
+  
+  function step(timestamp) {
+    if (!startTime) startTime = timestamp;
+    var progress = (timestamp - startTime) / duration;
+    if (progress > 1) progress = 1;
+    
+    // Ease-in-out cubic for a luxury classy scroll
+    var ease = progress < 0.5 
+      ? 4 * progress * progress * progress 
+      : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+      
+    el.scrollTop = startTop + dist * ease;
+    
+    if (progress < 1) {
+      requestAnimationFrame(step);
+    }
+  }
+  requestAnimationFrame(step);
+}
+
+function startAutoAdvance() {
+  // Transition 1: Slide from Opening to Journey after 5 seconds
+  autoAdvanceTimeout = setTimeout(function(){
+    scroller.scrollTo({
+      top: sJourney.offsetTop,
+      behavior: 'smooth'
+    });
+    
+    // Transition 2: Slide from Journey to Details after another 5.5 seconds
+    autoAdvanceTimeout = setTimeout(function(){
+      scroller.scrollTo({
+        top: sDetails.offsetTop,
+        behavior: 'smooth'
+      });
+      
+      // Transition 3: Wait 2.5 seconds on details cover, then slowly scroll down to bottom
+      autoAdvanceTimeout = setTimeout(function(){
+        var targetScroll = scroller.scrollHeight - scroller.clientHeight;
+        slowScrollToBottom(scroller, targetScroll, 3800); // 3.8s classy slow scroll
+        
+        // Trigger classy stagger reveal 1 second into the slow scroll
+        setTimeout(function(){
+          document.querySelector('.cta-stack').classList.add('revealed');
+        }, 1000);
+      }, 2500);
+      
+    }, 5500);
+    
+  }, 5000);
+}
+
+// Fallback scroll listener: reveal CTAs if user manually scrolls down to the details page
+scroller.addEventListener('scroll', function() {
+  var triggerPos = sDetails.offsetTop + 120;
+  if (scroller.scrollTop >= triggerPos) {
+    document.querySelector('.cta-stack').classList.add('revealed');
+  }
+});
+
+// Tap Cover Seal to Open
+document.getElementById('s-entry').addEventListener('click', function(){
+  if(started) return;
+  started = true;
+  
+  // Start music
+  audio.play().then(function() {
+    musicToggle.classList.add('playing');
+  }).catch(function(err) {
+    console.log("Audio playback blocked: user click registered but browser restricted", err);
+  });
+  
+  // Add scale & fade out transition to cover screen
+  var entryScreen = document.getElementById('s-entry');
+  entryScreen.classList.add('fade-out');
+  
+  // Reset scroll of layout wrapper
+  scroller.scrollTop = 0;
+  
+  // Reveal music controls & canvas particles
+  musicToggle.style.display = 'flex';
+  canvas.style.display = 'block';
+  
+  // Initialize particles
+  initParticles();
+  animateParticles();
+  
+  // Remove cover screen element from DOM to clean up and allow scrolling
+  setTimeout(function(){
+    entryScreen.style.display = 'none';
+    // Start automatic slideshow transition through remaining cards (fully hands-free)
+    startAutoAdvance();
+  }, 1200);
+});
+
+/* ---------- countdown timer ---------- */
+function initCountdown() {
+  var targetDate = new Date('August 15, 2026 16:00:00').getTime();
+  
+  var daysVal = document.getElementById('cd-days');
+  var hoursVal = document.getElementById('cd-hours');
+  var minsVal = document.getElementById('cd-mins');
+  var secsVal = document.getElementById('cd-secs');
+  
+  function update() {
+    var now = new Date().getTime();
+    var dist = targetDate - now;
+    
+    if (dist < 0) {
+      document.getElementById('countdown-container').style.display = 'none';
+      return;
+    }
+    
+    var days = Math.floor(dist / (1000 * 60 * 60 * 24));
+    var hours = Math.floor((dist % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var mins = Math.floor((dist % (1000 * 60 * 60)) / (1000 * 60));
+    var secs = Math.floor((dist % (1000 * 60)) / 1000);
+    
+    daysVal.textContent = String(days).padStart(2, '0');
+    hoursVal.textContent = String(hours).padStart(2, '0');
+    minsVal.textContent = String(mins).padStart(2, '0');
+    secsVal.textContent = String(secs).padStart(2, '0');
+  }
+  
+  update();
+  setInterval(update, 1000);
+}
+initCountdown();
+
+/* ---------- calendar dropdown & dynamic .ics download ---------- */
+var calendarBtn = document.getElementById('calendar-btn');
+var calendarDropdown = document.getElementById('calendar-dropdown');
+
+calendarBtn.addEventListener('click', function(e){
+  e.stopPropagation();
+  var show = calendarDropdown.classList.toggle('show');
+  calendarBtn.setAttribute('aria-expanded', show ? 'true' : 'false');
+});
+
+document.addEventListener('click', function(){
+  calendarDropdown.classList.remove('show');
+  calendarBtn.setAttribute('aria-expanded', 'false');
+});
+
+document.getElementById('download-ics').addEventListener('click', function(e) {
+  e.preventDefault();
+  var icsMsg = [
+    'BEGIN:VCALENDAR',
+    'VERSION:2.0',
+    'PRODID:-//Zainah & Wafiq Wedding//NONSGML v1.0//EN',
+    'BEGIN:VEVENT',
+    'UID:wedding-zainah-wafiq-2026@zainahandwafiq.com',
+    'DTSTAMP:20260620T000000Z',
+    'DTSTART:20260815T103000Z', // 4:00 PM IST is 10:30 AM UTC
+    'DTEND:20260815T163000Z',   // 10:00 PM IST is 4:30 PM UTC
+    'SUMMARY:Wedding of Zainah & Wafiq',
+    'DESCRIPTION:We would be honoured by your presence at the wedding of Zainah Akbar Ali & M. Abdul Wafiq on Saturday, 15 August 2026.',
+    'LOCATION:Orchid Resorts, Uthandi, ECR, Chennai',
+    'END:VEVENT',
+    'END:VCALENDAR'
+  ].join('\r\n');
+  
+  var blob = new Blob([icsMsg], { type: 'text/calendar;charset=utf-8' });
+  var link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = 'zainah-wafiq-wedding.ics';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+});
+</script>
+</body>
+</html>
