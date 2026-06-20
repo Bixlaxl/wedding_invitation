@@ -214,12 +214,12 @@ body{
 }
 .cta-stack > * {
   opacity: 0;
-  transform: translateY(15px);
-  transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(18px) scale(0.97);
+  transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .cta-stack.revealed > * {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
 }
 .cta-stack.revealed > .countdown-section {
   transition-delay: 0.1s;
@@ -703,11 +703,15 @@ var sDetails = document.getElementById('s-details');
 var started = false;
 var autoAdvanceTimeout = null;
 
-function slowScrollToBottom(el, targetTop, duration) {
+function slowScrollToBottom(el, targetTop, duration, onComplete) {
   var startTop = el.scrollTop;
   var dist = targetTop - startTop;
-  if (dist <= 0) return;
-  
+  if (dist <= 0) { if (onComplete) onComplete(); return; }
+
+  // Disable scroll-snap while we drive scrollTop manually — otherwise the
+  // browser keeps trying to snap back mid-animation, causing jitter.
+  el.style.scrollSnapType = 'none';
+
   var startTime = null;
   
   function step(timestamp) {
@@ -724,6 +728,9 @@ function slowScrollToBottom(el, targetTop, duration) {
     
     if (progress < 1) {
       requestAnimationFrame(step);
+    } else {
+      el.style.scrollSnapType = ''; // restore normal snap for manual scrolling
+      if (onComplete) onComplete();
     }
   }
   requestAnimationFrame(step);
